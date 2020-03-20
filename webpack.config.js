@@ -4,6 +4,7 @@ const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { VueLoaderPlugin } = require("vue-loader");
 //const CleanWebpackPlugin = require('clean-webpack-plugin');
 //const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
@@ -11,6 +12,7 @@ module.exports = env => {
 	var PROD = false;
 
 	let plugins = [
+		new VueLoaderPlugin(),
 		new CopyWebpackPlugin([
 			{ from: './src/*.json', to: './', flatten: true },
 			{ from: './src/*.html', to: './', flatten: true },
