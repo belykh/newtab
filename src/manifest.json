@@ -1,0 +1,15 @@
+{
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "name": "New Tab X",
+  "description": "New Tab X",
+  "icons": {
+    "32": "./img/icon32.png"
+  },
+  "chrome_url_overrides" : {
+    "newtab": "main.html"
+  },
+  "permissions": [
+    "topSites", "bookmarks", "chrome://favicon/"
+  ]
+}
