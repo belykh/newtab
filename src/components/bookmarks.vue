@@ -97,7 +97,7 @@ export default {
 	display: flex;
 	flex-direction: row;
 	width: 100%;
-	background-color: #ccc;
+	background-color: #aaa;
 	box-sizing: border-box;
 }
 .bookmark {
@@ -109,6 +109,7 @@ export default {
 	align-items: center;
 	justify-content: flex-start;
 	margin: 4px 2px;
+	padding: 0 4px;
 	&:hover {
 		background-color: #888;
 	}

@@ -23,7 +23,12 @@ export default {
 	},
 	computed: {
 		title() {
-			return this.site.title;
+			let title = this.site.title;
+			let pos = title.search(/ [-–] /);
+			if (~pos) {
+				title = title.slice(0, pos)
+			}
+			return title;
 		}
 	},
 	/*methods: {
@@ -37,8 +42,6 @@ export default {
 .topsite-tile {
 	display: flex;
 	flex-direction: column;
-	height: 80px;
-	width: 64px;
 	overflow: hidden;
 	align-items: center;
 	justify-content: flex-start;
@@ -48,7 +51,7 @@ export default {
 	transition: .3s;
 	text-decoration: none;
 	&:hover {
-		background-color: #ccc;
+		background-color: #555;
 	}
 	&__title {
 		overflow: hidden;
@@ -56,17 +59,23 @@ export default {
 		width: 100%;
 		white-space: nowrap;
 		text-overflow: ellipsis;
+		box-sizing: border-box;
 		color: #333;
+		background-color: white;
+		border-radius: 16px;
+		width: 80px;
+		line-height: 24px;
+		padding: 0 8px;
 	}
 	&__icon {
-		height: 32px;
-		width: 32px;
+		height: 48px;
+		width: 48px;
 		border-radius: 50%;
+		margin: 16px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		background-color: #aaa;
-		margin: 16px;
 		img {
 			height: 16px;
 			width: 16px;

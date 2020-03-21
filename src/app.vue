@@ -23,6 +23,7 @@ body {
 	min-height: 100%;
 	margin: 0;
 	padding: 0;
+	background-color: #333;
 }
 .content {
 	display: flex;
