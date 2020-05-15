@@ -16,24 +16,24 @@
 		</div>
 	</div>
 </template>
-<script>
-export default {
-	data() {
-		return {};
-	},
+<script lang="ts">
+import Vue from 'vue';
+import { BookmarkItem } from './bookmarks.vue';
+
+const BookmarkMenuItemProps = Vue.extend({
 	props: {
-		items: {
-			type: Array,
-			default: {},
-		}
-	},
-	methods: {
-		onClick(item) {
-			if (item.url) {
-				chrome.tabs.update({ url: item.url });
-			} else {
-				item.menuDropDown = !item.menuDropDown;
-			}
+		items: []
+	}
+});
+
+export default class BookmarkMenuItem extends BookmarkMenuItemProps {
+	// @Prop() items: any[] = [];
+
+	onClick(item: BookmarkItem) {
+		if (item.url) {
+			chrome.tabs.update({ url: item.url });
+		} else {
+			item.menuDropDown = !item.menuDropDown;
 		}
 	}
 }
@@ -42,29 +42,28 @@ export default {
 .bookmark-dropdown {
 	position: absolute;
 	top: 30px;
-	border: 1px solid #9f9f9f;
-	box-shadow: 2px 2px 2px 0 #ccc;
+	border: 1px solid #555;
+	box-shadow: 2px 2px 2px 0 #555;
 	z-index: 3;
 	background: white;
-
-}
-.bookmark-dropdown-item {
-	cursor: default;
-	transition: .2s;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: flex-start;
-	margin: 4px 2px;
-	&:hover {
-		background-color: #888;
-	}
-	&__title {
-		margin: 4px;
-		max-width: 300px;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		overflow: hidden;
+	&-item {
+		cursor: default;
+		transition: .2s;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+		margin: 4px 2px;
+		&:hover {
+			background-color: #888;
+		}
+		&__title {
+			margin: 4px;
+			max-width: 300px;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}
 	}
 }
 </style>

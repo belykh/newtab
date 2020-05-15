@@ -18,22 +18,29 @@
 		</div>
 	</div>
 </template>
-<script>
+<script lang="ts">
 import Vue from 'vue';
+import { Component } from 'vue-property-decorator';
 
-import menuItem from './menu-item.vue'
+import menuItem from './menu-item.vue';
 
-export default {
-	data() {
-		return {
-			bookmarkBar: [],
-			otherBookmarks: [],
-			menuDropDown: false,
-		};
-	},
+export type BookmarkItem = {
+	url: string,
+	title: string,
+	menuDropDown: boolean,
+	children?: BookmarkItem[],
+};
+
+@Component({
 	components: {
 		'menu-item': menuItem,
-	},
+	}
+})
+export default class extends Vue {
+	bookmarkBar: BookmarkItem[] = [];
+	otherBookmarks: any[] | undefined = [];
+	menuDropDown = false;
+
 	/*watch: {
 		menuDropDown(value) {
 			if (!value) {
@@ -42,17 +49,15 @@ export default {
 		}
 	},*/
 	created() {
-		//document.addEventListener('click', () => {
-		//	this.menuDropDown = false;
-		//}, false);
 		chrome.bookmarks.getTree(list => {
-			let childrenLoop = (items) => {
-				let res = []
-				items.forEach(i => {
-					let newItem = {};
-					newItem.title = i.title;
-					newItem.url = i.url;
-					newItem.menuDropDown = false;
+			let childrenLoop = (items: any): BookmarkItem[] => {
+				let res: BookmarkItem[] = []
+				items.forEach((i: any) => {
+					let newItem: BookmarkItem = {
+						title: i.title,
+						url: i.url,
+						menuDropDown: false,
+					};
 
 					
 					if (i.children) {
@@ -62,32 +67,35 @@ export default {
 				});
 				return res;
 			}
-			this.bookmarkBar = childrenLoop(list[0].children[0].children);
-			this.otherBookmarks = list[0].children[1].children;
+			if (list && list[0] && list[0].children) {
+				this.bookmarkBar = childrenLoop(list[0].children[0].children);
+			}
+			if (list && list[0] && list[0].children) {
+				this.otherBookmarks = list[0].children[1].children;
+			}
 
 			//Vue.set(this.bookmarkBar[0], 'menuDropDown', false);
 
 			console.log(this.bookmarkBar)
 
 		});
-	},
-	methods: {
-		onClick(item) {
-			if (item.url) {
-				chrome.tabs.update({ url: item.url });
-			} else {
-				this.menuDropDown = true;
-				item.menuDropDown = !item.menuDropDown;
-			}
-		},
-		onMouseOver(item) {
-			if (this.menuDropDown && item.children) {
-				this.bookmarkBar.forEach(i => {
-					i.menuDropDown = false;
-				});
-				item.menuDropDown = true;
-				console.log('mouseOver', item.title);
-			}
+	}
+
+	onClick(item: BookmarkItem) {
+		if (item.url) {
+			chrome.tabs.update({ url: item.url });
+		} else {
+			this.menuDropDown = true;
+			item.menuDropDown = !item.menuDropDown;
+		}
+	}
+	onMouseOver(item: BookmarkItem) {
+		if (this.menuDropDown && item.children) {
+			this.bookmarkBar.forEach(i => {
+				i.menuDropDown = false;
+			});
+			item.menuDropDown = true;
+			console.log('mouseOver', item.title);
 		}
 	}
 }

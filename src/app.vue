@@ -4,15 +4,21 @@
 		<top-sites />
 	</div>
 </template>
-<script>
+<script lang="ts">
+import Vue from 'vue';
+import Component from 'vue-class-component';
+
 import topSites from './components/top-sites/top-sites.vue';
 import bookmarks from './components/bookmarks.vue';
 
-export default {
+@Component({
 	components: {
 		'top-sites': topSites,
 		bookmarks,
 	}
+})
+export default class extends Vue {
+
 }
 </script>
 <style lang="less">

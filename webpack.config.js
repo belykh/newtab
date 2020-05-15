@@ -24,7 +24,7 @@ module.exports = env => {
 	return {
 		mode: PROD ? 'production' : 'development',
 		entry: {
-			index: './src/index.js'
+			index: './src/index.ts'
 		},
 		output: {
 			path: path.resolve(__dirname, 'dist'),
@@ -34,31 +34,35 @@ module.exports = env => {
 		watchOptions: { aggregateTimeout: 200 },
 		devtool: PROD ? false : 'inline-source-map',
 		plugins,
+		resolve: {
+			extensions: ['.ts', '.js', '.vue'],
+		},
 		module: {
-			rules: [{
-					test: /\.js$/,
-					loader: 'babel-loader',
-					exclude: /node_modules/,
-					options: {
-						plugins: ['@babel/plugin-transform-runtime'],
-						presets: ['@babel/preset-env']
-					}
-				}, {
+			rules: [
+				{
 					test: /\.vue$/,
 					loader: 'vue-loader',
+					exclude: /node_modules/,
 					options: {
 						loaders: {
 							less: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
-							js: {
-								loader: 'babel-loader',
-								options: { 
-									plugins: ['@babel/plugin-transform-runtime'],
-									presets: ['@babel/preset-env'] 
-								}
-							}
 						}
 					}
-				}, {
+				},
+				{
+					test: /\.js$/,
+					loader: 'babel-loader',
+					exclude: /node_modules/
+				},
+				{
+					test: /\.tsx?$/,
+					loader: 'ts-loader',
+					exclude: /node_modules/,
+					options: {
+						appendTsSuffixTo: [/\.vue$/],
+					}
+				},
+				{
 					test: /\.less$/,
 					use: [
 						{ loader: MiniCssExtractPlugin.loader },

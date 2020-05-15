@@ -9,33 +9,34 @@
 		<div class="topsite-tile__title">{{ title }}</div>
 	</a>
 </template>
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+
+export type Site = {
+	title: string;
+	url: string;
+};
+
+const TopSitesMenuItemProps = Vue.extend({
 	props: {
-		site: {
-			type: Object,
-			default: {},
-		},
-	},
-	data() {
-		return {
-		};
-	},
-	computed: {
-		title() {
-			let title = this.site.title;
-			let pos = title.search(/ [-–] /);
-			if (~pos) {
-				title = title.slice(0, pos)
-			}
-			return title;
+		site: Object
+	}
+});
+
+export default class TopSitesMenuItem extends TopSitesMenuItemProps {
+	// @Prop() site: Site = {
+	// 	title: '',
+	// 	url: '',
+	// };
+
+	get title() {
+		let title = this.site.title || '';
+		let pos = title.search(/ [-–] /);
+		if (~pos) {
+			title = title.slice(0, pos)
 		}
-	},
-	/*methods: {
-		onClick(url) {
-			chrome.tabs.update({ url });
-		}
-	}*/
+		return title;
+	}
 }
 </script>
 <style lang="less">
