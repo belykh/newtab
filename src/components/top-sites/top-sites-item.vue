@@ -11,6 +11,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue';
+import { Component, Prop } from 'vue-property-decorator';
 
 export type Site = {
 	title: string;
@@ -23,6 +24,7 @@ const TopSitesMenuItemProps = Vue.extend({
 	}
 });
 
+@Component
 export default class TopSitesMenuItem extends TopSitesMenuItemProps {
 	// @Prop() site: Site = {
 	// 	title: '',
@@ -38,6 +40,7 @@ export default class TopSitesMenuItem extends TopSitesMenuItemProps {
 		return title;
 	}
 }
+
 </script>
 <style lang="less">
 .topsite-tile {

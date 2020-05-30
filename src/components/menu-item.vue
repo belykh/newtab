@@ -1,6 +1,8 @@
 <template>
 	<div class="bookmark-dropdown">
-		<div
+		<component
+			:is="item.url ? 'a' : 'div'"
+			:href="item.url ? item.url : null"
 			v-for="(item) in items"
 			:key="item.id"
 			class="bookmark-dropdown-item"
@@ -13,26 +15,24 @@
 				<path fill="#FFCA28" d="M40,12H8c-2.2,0-4,1.8-4,4v20c0,2.2,1.8,4,4,4h32c2.2,0,4-1.8,4-4V16C44,13.8,42.2,12,40,12z"/>
 			</svg>
 			<div v-if="item.title" class="bookmark-dropdown-item__title">{{ item.title }}</div>
-		</div>
+		</component>
 	</div>
 </template>
 <script lang="ts">
 import Vue from 'vue';
+import { Component, Prop } from 'vue-property-decorator';
 import { BookmarkItem } from './bookmarks.vue';
 
 const BookmarkMenuItemProps = Vue.extend({
 	props: {
-		items: []
+		items: { type: Array, default: [] }
 	}
 });
 
+@Component
 export default class BookmarkMenuItem extends BookmarkMenuItemProps {
-	// @Prop() items: any[] = [];
-
 	onClick(item: BookmarkItem) {
-		if (item.url) {
-			chrome.tabs.update({ url: item.url });
-		} else {
+		if (!item.url) {
 			item.menuDropDown = !item.menuDropDown;
 		}
 	}
@@ -46,6 +46,8 @@ export default class BookmarkMenuItem extends BookmarkMenuItemProps {
 	box-shadow: 2px 2px 2px 0 #555;
 	z-index: 3;
 	background: white;
+	max-height: calc(var(--windowHeight) - 34px);
+	overflow-y: auto;
 	&-item {
 		cursor: default;
 		transition: .2s;
@@ -54,6 +56,8 @@ export default class BookmarkMenuItem extends BookmarkMenuItemProps {
 		align-items: center;
 		justify-content: flex-start;
 		margin: 4px 2px;
+		text-decoration: none;
+		color: #333;
 		&:hover {
 			background-color: #888;
 		}
