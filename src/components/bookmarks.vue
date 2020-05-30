@@ -14,7 +14,7 @@
 				<path fill="#FFCA28" d="M40,12H8c-2.2,0-4,1.8-4,4v20c0,2.2,1.8,4,4,4h32c2.2,0,4-1.8,4-4V16C44,13.8,42.2,12,40,12z"/>
 			</svg>
 			<div v-if="item.title" class="bookmark__title">{{ item.title }}</div>
-			<menu-item v-if="item.menuDropDown" :items="item.children" />
+			<menu-item v-if="item.menuDropDown && item.children" :items="item.children" />
 		</div>
 	</div>
 </template>
@@ -49,6 +49,8 @@ export default class extends Vue {
 		}
 	},*/
 	created() {
+		document.documentElement.style.setProperty('--windowHeight', window.innerHeight + 'px');
+
 		chrome.bookmarks.getTree(list => {
 			let childrenLoop = (items: any): BookmarkItem[] => {
 				let res: BookmarkItem[] = []

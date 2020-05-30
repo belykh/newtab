@@ -1,0 +1,35 @@
+module.exports = {
+    parser: "@typescript-eslint/parser",
+	extends: [
+		"plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+		//"@button",
+	],
+	"rules": {
+		"indent": ["error", "tab", { "SwitchCase": 1 }],
+		"brace-style": [2, "1tbs"],
+		"default-case": 2,
+		"func-style": [2, "declaration", { "allowArrowFunctions": true }],
+		"guard-for-in": 2,
+		"no-floating-decimal": 2,
+		"no-nested-ternary": 2,
+		"no-undefined": 2,
+		"radix": 2,
+		"keyword-spacing": 2,
+		"no-multi-spaces": 2,
+		"quotes": ["error", "single"],
+		"semi": ["error", "always"],
+		"curly": 1,
+		"comma-dangle": ["error", "always-multiline"],
+		"dot-notation": 1,
+		"eqeqeq": 1,
+		"no-alert": 1,
+		"no-eval": 1,
+		"no-invalid-this": 1,
+		"no-console": 0,
+		"array-bracket-newline": 1,
+		"array-bracket-spacing": 1,
+		"object-shorthand": ["error", "always", { "avoidQuotes": true }],
+		"prefer-template": 1,
+        "template-curly-spacing": ["error", "never"],
+    }
+}

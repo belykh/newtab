@@ -46,37 +46,34 @@ module.exports = env => {
 					options: {
 						loaders: {
 							less: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
-						}
-					}
-				},
-				{
+						},
+					},
+				}, {
 					test: /\.js$/,
 					loader: 'babel-loader',
 					exclude: /node_modules/
-				},
-				{
+				}, {
 					test: /\.tsx?$/,
 					loader: 'ts-loader',
 					exclude: /node_modules/,
 					options: {
 						appendTsSuffixTo: [/\.vue$/],
 					}
-				},
-				{
+				}, {
 					test: /\.less$/,
 					use: [
 						{ loader: MiniCssExtractPlugin.loader },
 						{ loader: 'css-loader' },
-						{ loader: 'less-loader' }
-					]
+						{ loader: 'less-loader' },
+					],
 				}, {
 					test: /\.css$/,
 					use: [
 						{ loader: MiniCssExtractPlugin.loader },
-						{ loader: 'css-loader' }
-					]
-				}
-			]
+						{ loader: 'css-loader' },
+					],
+				},
+			],
 		},
 	};
 }

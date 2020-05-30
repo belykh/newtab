@@ -33,14 +33,13 @@ export default class TopSitesMenuItem extends TopSitesMenuItemProps {
 
 	get title() {
 		let title = this.site.title || '';
-		let pos = title.search(/ [-–] /);
-		if (~pos) {
+		const pos = title.search(/ [-–] /);
+		if (pos >= 0) {
 			title = title.slice(0, pos)
 		}
 		return title;
 	}
 }
-
 </script>
 <style lang="less">
 .topsite-tile {
