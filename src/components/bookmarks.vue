@@ -4,7 +4,8 @@
 			v-for="(item) in bookmarkBar"
 			:key="item.id"
 			class="bookmark"
-			@click="onClick(item)"
+			:title="item.url ? item.url : ''"
+			@click="onClick($event, item)"
 			@mouseenter="onMouseOver(item)"
 		>
 
@@ -80,10 +81,25 @@ export default class extends Vue {
 
 			console.log(this.bookmarkBar)
 
+			this.bookmarkBar.unshift({
+				title: 'Apps',
+				url: 'chrome://apps/',
+				menuDropDown: false,
+			});
+
+			document.addEventListener('click', () => {
+				if (this.menuDropDown) {
+					this.menuDropDown = false;
+					this.bookmarkBar.forEach(i => {
+						i.menuDropDown = false;
+					});
+				}
+			}, false);
 		});
 	}
 
-	onClick(item: BookmarkItem) {
+	onClick(event: MouseEvent, item: BookmarkItem) {
+		event.stopPropagation();
 		if (item.url) {
 			chrome.tabs.update({ url: item.url });
 		} else {
