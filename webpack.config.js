@@ -1,14 +1,13 @@
 /* global require module __dirname */
 
 const path = require('path');
-const webpack = require('webpack');
+// const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { VueLoaderPlugin } = require("vue-loader");
 //const CleanWebpackPlugin = require('clean-webpack-plugin');
-//const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
-module.exports = env => {
+module.exports = () => {
 	var PROD = false;
 
 	let plugins = [
@@ -24,12 +23,12 @@ module.exports = env => {
 	return {
 		mode: PROD ? 'production' : 'development',
 		entry: {
-			index: './src/index.ts'
+			index: './src/index.ts',
 		},
 		output: {
 			path: path.resolve(__dirname, 'dist'),
 			filename: '[name].js',
-			library: 'src'
+			library: 'src',
 		},
 		watchOptions: { aggregateTimeout: 200 },
 		devtool: PROD ? false : 'inline-source-map',
@@ -51,14 +50,14 @@ module.exports = env => {
 				}, {
 					test: /\.js$/,
 					loader: 'babel-loader',
-					exclude: /node_modules/
+					exclude: /node_modules/,
 				}, {
 					test: /\.tsx?$/,
 					loader: 'ts-loader',
 					exclude: /node_modules/,
 					options: {
 						appendTsSuffixTo: [/\.vue$/],
-					}
+					},
 				}, {
 					test: /\.less$/,
 					use: [
@@ -76,4 +75,4 @@ module.exports = env => {
 			],
 		},
 	};
-}
+};
